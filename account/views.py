@@ -11,8 +11,10 @@ from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
 from django.core.mail import EmailMessage
 from django.contrib.auth.tokens import default_token_generator
+import requests
 from account.models import Account
 from django.utils.http import urlsafe_base64_decode
+
 
 def register(request):
     if request.method == 'POST':
@@ -54,6 +56,16 @@ def login(request):
             if check_password(password, user.password):
                 auth_login(request, user)  # Log the user in
                 messages.success(request, 'You are logged in!')
+                url=request.META.get('HTTP_REFERER')
+                try:
+                    query=requests.utils.urlparse(url).query
+                    params=dict(x.split('=')for x in query.split('&'))
+                    if 'next' in params:
+                        nextpage=params['nexy']
+                        return redirect(nextpage)
+                    return redirect('home')
+                except:
+                    pass
                 return redirect('home')
             else:
                 messages.error(request, 'Invalid password, please try again.')
