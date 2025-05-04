@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     'store',
     'cart',
     'account',
+    'order',
+    
 ]
 
 MIDDLEWARE = [
@@ -138,6 +140,8 @@ EMAIL_PORT=587
 EMAIL_HOST_USER='sahildkamble0505@gmail.com'
 EMAIL_HOST_PASSWORD='samy kaok xupc xvnd'
 
+RAZORPAY_KEY_ID='rzp_test_vEgdKihjkSCm8m'
+RAZORPAY_KEY_SECRET='agbnEK31OWMFSIbocOMvSRfn'
 
 
 # Default primary key field type

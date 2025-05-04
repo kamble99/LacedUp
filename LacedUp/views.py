@@ -1,6 +1,7 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
-from store.models import Product
+from category.models import Category
+
 def home(request):
-    products=Product.objects.all().filter(is_available=True)
-    return render(request,'home.html', {'products':products})
+    categories = Category.objects.all()
+    return render(request, 'Home.html', {'categories': categories})

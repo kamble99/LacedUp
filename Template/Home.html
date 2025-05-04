@@ -5,8 +5,8 @@
 <!-- ========================= SECTION MAIN ========================= -->
 <section class="section-intro padding-y-sm">
 	<div class="container p-0">
-		<div class="intro-banner-wrap">
-			<img src="{% static 'images/banners/2.png' %}" 
+		<div class="intro-banner-wrap" >
+			<img src="{%static './images/logo.jpg'%}" 
 			     class="img-fluid w-100 d-block" 
 			     style="height: 300px; object-fit: cover;" 
 			     alt="LacedUp Banner">
@@ -26,18 +26,21 @@
 
 
 		<div class="row">
-			{%for product in products%}
+			{% for category in categories %}
 			<div class="col-md-3">
 				<div class="card card-product-grid">
-					<a href="{{product.get_url}}" class="img-wrap"> <img src="{{product.Image.url}}"> </a>
-					<figcaption class="info-wrap">
-						<a href="{{product.get_url}}" class="title">{{product.product_name}}</a>
-						<div class="price mt-1">₹ {{product.price}}</div> <!-- price-wrap.// -->
+					<a href="{{ category.get_url }}" class="img-wrap">
+						<img src="{{ category.cat_image.url }}" alt="{{ category.category_name }}">
+					</a>
+					<figcaption class="info-wrap text-center">
+						<a href="{{ category.get_url }}" class="title" style="font-weight: bold;">{{ category.category_name }}</a>
 					</figcaption>
+					
 				</div>
 			</div>
-			{%endfor%}
+			{% endfor %}
 		</div>
+		
 	</div>
 </section>
 <!-- ========================= SECTION  END// ========================= -->

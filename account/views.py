@@ -147,3 +147,9 @@ def reset_password(request):
             return redirect('reset_password')
     else:
         return render(request, 'reset_password.html')
+
+@login_required
+def userinfo(request):
+    profile = request.user  # If Account is your custom user model
+    return render(request, 'Profile.html', {'profile': profile})
+
