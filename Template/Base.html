@@ -87,7 +87,9 @@
                         <div class="d-flex justify-content-end mb-3 mb-lg-0">
                            {% if user.is_authenticated %}
                             <div class="widget-header">
-                                <small class="title text-muted">Welcome {{ user.first_name }}!</small>
+                                {% if request.session.uname is not None %}
+                                <small class="title text-muted">Welcome {{request.session.uname}}!</small>
+                                {% endif %}
                                 <div>
                                     <a href="{% url 'dashboard' %}">Dashboard</a> <span class="dark-transp"> | </span>
                                     <a href="{%url 'userinfo'%}">Profile</a><span class="dark-transp"> | </span>

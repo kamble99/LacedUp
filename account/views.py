@@ -53,9 +53,11 @@ def login(request):
 
         try:
             user = Account.objects.get(email=email)
+            
             if check_password(password, user.password):
                 auth_login(request, user)  # Log the user in
                 messages.success(request, 'You are logged in!')
+                request.session['uname'] = user.first_name
                 url=request.META.get('HTTP_REFERER')
                 try:
                     query=requests.utils.urlparse(url).query
