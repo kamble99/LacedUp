@@ -123,29 +123,30 @@ def payment(request, order_id):
     }
     return render(request, 'payment_page.html', context)
 
-def payment_success(request):
-    order_id = request.GET.get('order_id')
-    payment_id = request.GET.get('payment_id')  # Razorpay payment ID
-
+def payment_success(request, order_id, payment_id):
     try:
-    
         order = Order.objects.get(id=order_id)
+        payment, created = Payment.objects.get_or_create(payment_id=payment_id)
 
-       
-        payment= Payment.objects.get_or_create(payment_id=payment_id)
-
-        # Link the payment to the order
-        order.payment = payment  # Associate the order with the payment
-
-        
+        order.payment = payment
         order.status = 'Completed'
         order.is_ordered = True
-
-        # Save the order
         order.save()
 
-        # Return success response
-        return render(request, 'payment_success.html', {'order': order})
+        ordered_products = OrderProduct.objects.filter(order=order)
+
+        # Calculate totals
+        total = sum(item.product_price * item.quantity for item in ordered_products)
+        tax = order.tax
+        grand_total = total + tax
+
+        return render(request, 'payment_success.html', {
+            'order': order,
+            'ordered_products': ordered_products,
+            'total': total,
+            'tax': tax,
+            'grand_total': grand_total,
+        })
 
     except Order.DoesNotExist:
         return render(request, 'error.html', {'message': 'Order not found'})

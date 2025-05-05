@@ -102,8 +102,30 @@
         {% endfor %}
     </div>
 
-    <a href="{% url 'payment' order_id=order.id %}" class="btn btn-success">Payment</a>
+    <button id="pay-btn" class="btn btn-success">Payment</button>
     
 </div>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var options = {
+            key: "rzp_test_vEgdKihjkSCm8m",
+            amount: '{{grand_total}}'*100,
+            currency: "INR",
+            name: "LacedUp",
+            handler: function(response) {
+                window.location.href = `/order/place_order/payment_success/{{ order.id }}/${response.razorpay_payment_id}/`;
+            }
+        };
+        var rzp1 = new Razorpay(options);
+        var payButton = document.getElementById("pay-btn");
+        if (payButton) {
+            payButton.onclick = function (e) {
+                rzp1.open();
+                e.preventDefault();
+            };
+        }
+    });
+</script>
 
 {% endblock container %}
