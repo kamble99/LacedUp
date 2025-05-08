@@ -6,6 +6,8 @@ from LacedUp import settings
 from .models import Order, OrderProduct, Payment
 from cart.models import CartItem
 import datetime
+from django.core.mail import send_mail
+
 
 def place_order(request):
     current_user = request.user

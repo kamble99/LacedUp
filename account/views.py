@@ -46,6 +46,23 @@ def register(request):
 
     return render(request, 'register.html')
 
+
+def update(request):
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        try:
+            user = Account.objects.get(email=email)
+            user.first_name = request.POST.get('fname')
+            user.last_name = request.POST.get('lname')
+            user.phone_number = request.POST.get('phoneno')
+            user.save()
+            messages.success(request, 'Profile updated successfully.')
+        except Account.DoesNotExist:
+            messages.error(request, 'No account found with that email.')
+        return redirect('userinfo')  # or any page you want after update
+
+    return render(request, 'update.html')
+
 def login(request):
     if request.method == 'POST':
         email = request.POST['lemail']

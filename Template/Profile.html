@@ -3,18 +3,62 @@
 {% block title %}Profile{% endblock title %}
 
 {% block container %}
-<div class="profile-container" style="max-width: 600px; margin: 0 auto; padding: 20px;">
-    <h2>User Profile</h2>
-    <div class="profile-info" style="border: 1px solid #ddd; padding: 20px; border-radius: 10px;">
-        <p>Name: <span>{{ profile.first_name }} {{ profile.last_name }}</span></p>
-        <p>Username: <span>{{ profile.username }}</span></p>
-        <p>Email: <span>{{ profile.email }}</span></p>
-        <p>Phone No: <span>{{ profile.phone_number }}</span></p>
-        <p>Date Joined: <span>{{ profile.date_joined }}</span></p>
+<!-- AOS JS -->
+ <!-- AOS CSS -->
+<link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+<script>
+  AOS.init();
+</script>
+
+<style>
+    .profile-container {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    .profile-info {
+        border: 1px solid #ddd;
+        padding: 20px;
+        border-radius: 10px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .profile-info:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+        transform: scale(1.05);
+        transition: all 0.3s ease;
+    }
+    .profile-info p {
+    margin-bottom: 12px;
+    line-height: 1.6;
+}
+
+.profile-info strong {
+    color: #555;
+    display: inline-block;
+    width: 120px;
+}
+</style>
+
+<div class="profile-container" data-aos="fade-up" data-aos-duration="1000">
+    <h2 data-aos="zoom-in" data-aos-delay="300">User Profile</h2>
+    <div class="profile-info" data-aos="fade-right" data-aos-delay="500" style="border: 1px solid #ddd; padding: 20px; border-radius: 10px; font-size: 16px;">
+        <p><strong>Name:</strong> <span style="color: #333;">{{ profile.first_name }} {{ profile.last_name }}</span></p>
+        <p><strong>Username:</strong> <span style="color: #333;">{{ profile.username }}</span></p>
+        <p><strong>Email:</strong> <span style="color: #333;">{{ profile.email }}</span></p>
+        <p><strong>Phone No:</strong> <span style="color: #333;">{{ profile.phone_number }}</span></p>
+        <p><strong>Date Joined:</strong> <span style="color: #333;">{{ profile.date_joined|date:"F d, Y" }}</span></p>
     </div>
 
-    <div style="text-align: right; margin-top: 20px;">
-        <a href="#" class="btn btn-primary">Edit</a>
+    <div data-aos="fade-up" data-aos-delay="700" style="text-align: right; margin-top: 20px;">
+        <a href="{% url 'update' %}" class="btn btn-primary">Edit</a>
     </div>
 </div>
 {% endblock container %}
